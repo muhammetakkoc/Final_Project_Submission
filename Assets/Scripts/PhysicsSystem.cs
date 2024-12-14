@@ -41,7 +41,8 @@ public class PhysicsSystem
             // Only apply motion if the object is moveable
             if (body.Dynamic())
             {
-                Vector3 acc = gravity;
+                // E?er nesne bir domuz ise, yerçekimi uygulanmas?n
+                Vector3 acc = body.gameObject.tag == "Pig" ? Vector3.zero : gravity;
 
                 // Apply drag to velocity
                 body.vel *= Mathf.Pow(body.drag, dt);
@@ -51,6 +52,24 @@ public class PhysicsSystem
                 Integrate(ref body.pos, body.vel, dt);
             }
         }
+        //for (int i = 0; i < bodies.Length; i++)
+        //{
+        //    // Current physics object ("body")
+        //    PhysicsBody body = bodies[i];
+
+        //    // Only apply motion if the object is moveable
+        //    if (body.Dynamic())
+        //    {
+        //        Vector3 acc = gravity;
+
+        //        // Apply drag to velocity
+        //        body.vel *= Mathf.Pow(body.drag, dt);
+
+        //        // Apply motion
+        //        Integrate(ref body.vel, acc, dt);
+        //        Integrate(ref body.pos, body.vel, dt);
+        //    }
+        //}
     }
 
     private List<HitPair> DetectCollisions()
@@ -105,6 +124,24 @@ public class PhysicsSystem
 
     private void ResolveCollisions(List<HitPair> collisions)
     {
+
+        //foreach (HitPair collision in collisions)
+        //{
+        //    PhysicsBody a = bodies[collision.a];
+        //    PhysicsBody b = bodies[collision.b];
+
+        //    // E?er her iki nesne de bloksa veya bir blok ve bir domuzsa, çarp??may? çözme
+        //    if ((a.gameObject.CompareTag("Block") && b.gameObject.CompareTag("Block")) ||
+        //        (a.gameObject.CompareTag("Block") && b.gameObject.CompareTag("Pig")) ||
+        //        (a.gameObject.CompareTag("Pig") && b.gameObject.CompareTag("Block")))
+        //    {
+        //        continue; // Çarp??may? atla
+        //    }
+
+        //    // Di?er çarp??malar? çözmeye devam et
+        //    ResolveVelocities(collision);
+        //    ResolvePositions(collision);
+        //}
         // Pre-pass to ensure A is *always* dynamic and MTV points from B to A
         foreach (HitPair collision in collisions)
         {
